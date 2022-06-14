@@ -1,12 +1,10 @@
-const redLight = document.getElementById("redLight");
-const yellowLight = document.getElementById("yellowLight");
-const greenLight = document.getElementById("greenLight");
+const turnOn = document.getElementById("turnOn");
 const turnOff = document.getElementById("turnOff");
-const auto = document.getElementById("auto");
 const semaphore = document.getElementById("semaphore");
 const colors = ["green", "yellow", "red"];
 
 var colorIndex = 0;
+var interval = null;
 
 const light = {
     "red": () => {semaphore.src = "./img/vermelho.png";},
@@ -16,7 +14,7 @@ const light = {
 };
 
 function automatic() {
-    setInterval(changeLight, 2000)
+    interval = setInterval(changeLight, 1000)
 }
 
 function changeLight() {
@@ -32,8 +30,10 @@ function nextIndex() {
     }
 }
 
-redLight.addEventListener("click", light.red);
-yellowLight.addEventListener("click", light.yellow);
-greenLight.addEventListener("click", light.green);
-turnOff.addEventListener("click", light.off);
-auto.addEventListener("click", automatic);
+function out() {
+    clearInterval(interval);
+    light.off();
+}
+
+turnOn.addEventListener("click", automatic);
+turnOff.addEventListener("click", out);
